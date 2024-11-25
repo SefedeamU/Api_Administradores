@@ -13,49 +13,49 @@ provider:
 
 functions:
   createAdminUsuario:
-    handler: create_admin_usuarios.lambda_handler
+    handler: create_administradores.lambda_handler
     events:
       - http:
           path: admin/usuarios/create
           method: post
 
   deleteAdminUsuario:
-    handler: delete_admin_usuarios.lambda_handler
+    handler: delete_administradores.lambda_handler
     events:
       - http:
           path: admin/usuarios/delete
           method: delete
 
   fetchAdminUsuarios:
-    handler: fetch_admin_usuarios.lambda_handler
+    handler: fetch_administradores.lambda_handler
     events:
       - http:
           path: admin/usuarios/list
           method: get
 
   getAdminUsuario:
-    handler: get_admin_usuarios.lambda_handler
+    handler: get_administradores.lambda_handler
     events:
       - http:
-          path: admin/usuarios/get
+          path: admin/usuarios/getS
           method: get
 
   loginAdminUsuario:
-    handler: login_admin_usuarios.lambda_handler
+    handler: login_administradores.lambda_handler
     events:
       - http:
           path: admin/usuarios/login
           method: post
 
   updateAdminUsuario:
-    handler: update_admin_usuarios.lambda_handler
-    events:
+    handler: update_administradores.lambda_handler
+    events:S
       - http:
           path: admin/usuarios/update
           method: put
 
   validarAdminTokenAcceso:
-    handler: validar_admin_token_acceso.lambda_handler
+    handler: validar_token_acceso_administradores.lambda_handler
     events:
       - http:
           path: admin/usuarios/validar-token

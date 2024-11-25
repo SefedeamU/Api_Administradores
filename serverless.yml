@@ -1,0 +1,93 @@
+org: sefedeam
+service: api-usuarios-administradores
+
+provider:
+  name: aws
+  runtime: python3.12
+  memorySize: 1024
+  timeout: 30
+  iam:
+    role: arn:aws:iam::194347069948:role/LabRole
+  environment:
+    ADMINS_TABLE: ${sls:stage}-admin-usuarios
+
+functions:
+  createAdminUsuario:
+    handler: create_admin_usuarios.lambda_handler
+    events:
+      - http:
+          path: admin/usuarios/create
+          method: post
+
+  deleteAdminUsuario:
+    handler: delete_admin_usuarios.lambda_handler
+    events:
+      - http:
+          path: admin/usuarios/delete
+          method: delete
+
+  fetchAdminUsuarios:
+    handler: fetch_admin_usuarios.lambda_handler
+    events:
+      - http:
+          path: admin/usuarios/list
+          method: get
+
+  getAdminUsuario:
+    handler: get_admin_usuarios.lambda_handler
+    events:
+      - http:
+          path: admin/usuarios/get
+          method: get
+
+  loginAdminUsuario:
+    handler: login_admin_usuarios.lambda_handler
+    events:
+      - http:
+          path: admin/usuarios/login
+          method: post
+
+  updateAdminUsuario:
+    handler: update_admin_usuarios.lambda_handler
+    events:
+      - http:
+          path: admin/usuarios/update
+          method: put
+
+  validarAdminTokenAcceso:
+    handler: validar_admin_token_acceso.lambda_handler
+    events:
+      - http:
+          path: admin/usuarios/validar-token
+          method: get
+
+
+resources:
+  Resources:
+    AdminUsuariosDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.ADMINS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: userID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userID
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+
+    AdminTokensAccesoDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: admin_tokens_acceso
+        AttributeDefinitions:
+          - AttributeName: token
+            AttributeType: S
+        KeySchema:
+          - AttributeName: token
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5

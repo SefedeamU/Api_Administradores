@@ -37,7 +37,7 @@ functions:
     handler: get_administradores.lambda_handler
     events:
       - http:
-          path: admin/usuarios/getS
+          path: admin/usuarios/get
           method: get
 
   loginAdminUsuario:
@@ -49,7 +49,7 @@ functions:
 
   updateAdminUsuario:
     handler: update_administradores.lambda_handler
-    events:S
+    events:
       - http:
           path: admin/usuarios/update
           method: put
@@ -60,7 +60,6 @@ functions:
       - http:
           path: admin/usuarios/validar-token
           method: get
-
 
 resources:
   Resources:
